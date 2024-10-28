@@ -10,20 +10,34 @@
                 </div>
                 <h1 class="auth-title">Log in.</h1>
                 <p class="auth-subtitle mb-5">Log in with your data that you entered during registration.</p>
+                        
+                @if(Session::get("loginError"))
+                    <div class="alert alert-danger"><i class="bi bi-file-excel"></i> {{Session::get("loginError")}}.</div>
+                @endif
 
                 <form action="{{route('auth.login')}}" method="POST">
                     @csrf
                     <div class="form-group position-relative has-icon-left mb-4">
-                        <input type="text" class="form-control form-control-xl" placeholder="Username">
+                        <input type="text" class="form-control form-control-xl" placeholder="Username" name="username">
                         <div class="form-control-icon">
                             <i class="bi bi-person"></i>
                         </div>
+                        @error("username")
+                            <div  class="text-danger">
+                                <p>{{$message}}</p>
+                            </div>
+                        @enderror
                     </div>
                     <div class="form-group position-relative has-icon-left mb-4">
-                        <input type="password" class="form-control form-control-xl" placeholder="Password">
+                        <input type="password" class="form-control form-control-xl" placeholder="Password" name="password">
                         <div class="form-control-icon">
                             <i class="bi bi-shield-lock"></i>
                         </div>
+                        @error("password")
+                            <div  class="text-danger">
+                                <p>{{$message}}</p>
+                            </div>
+                        @enderror
                     </div>
                     <div class="form-check form-check-lg d-flex align-items-end">
                         <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
@@ -41,7 +55,7 @@
                         </a>.
                     </p>
                     <p>
-                        <a class="font-bold" href="{{route('auth.forgot-password')}}">Forgot password?</a>.
+                        <a class="font-bold" href="{{route('forgot-password.index')}}">Forgot password?</a>.
                     </p>
                 </div>
             </div>
