@@ -18,6 +18,8 @@ Route::prefix("auth")->name("auth.")->controller(AuthController::class)->group(f
 
 Route::prefix("forgot-password")->name("forgot-password.")->controller(ForgotPasswordController::class)->group(function(){
     Route::get("/","index")->name("index");
+    Route::post("send-token","sendToken")->name("send-token");
+    Route::post("reset-password-form/{email}/{token}","resetPasswordForm")->name("reset-password-form");
 });
 
 
