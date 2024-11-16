@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ResetPasswordMail;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Models\PasswordResetToken;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Session;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\ForgotPasswordRequest;
 
@@ -34,13 +33,30 @@ class ForgotPasswordController extends Controller
 
             $hashEmail=Hash::make($forgotPasswordRequest->email);
             $base64EncodeEmail=base64_encode($hashEmail);
+            // Mail::send('auth.mail-reset-password-token', ['token' => $token,'email' => $base64EncodeEmail], function ($message) use ($forgotPasswordRequest) {
+            //     $message->to($forgotPasswordRequest->email);
+            //     $message->subject('Reset Password');
+            // });
 
-            Mail::send('auth.mail-reset-password-token', ['token' => $token,'email' => $base64EncodeEmail], function ($message) use ($forgotPasswordRequest) {
-                $message->to($forgotPasswordRequest->email);
-                $message->subject('Reset Password');
-            });
+         
 
-            return redirect()->back()->with('link_success', ' Reset Link Send Successfully!');
+            Mail::to($forgotPasswordRequest->email)->send(new ResetPasswordMail(([
+                 'title' => 'Mail From Sistem Manajemen Hewan Kurban.',
+                'body' => ' We can not just send you your old password. A unique link to reset your password has been created for you. To reset your password, click
+                                        following link and follow the instructions.
+                           ',
+                'token' => $token,
+                'email' => $base64EncodeEmail
+            ])));
+
+            if (Mail::failures()) {
+    return response()->json(['status' => 'fail', 'message' => 'Failed to send email.']);
+} else {
+    return response()->json(['status' => 'success', 'message' => 'Email sent successfully.']);
+}
+
+
+            // return redirect()->back()->with('link_success', ' Reset Link Send Successfully!');
         } catch (\Exception $e) {
 
             return redirect()->back()->with('link_error', $e->getMessage());
