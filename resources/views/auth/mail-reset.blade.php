@@ -38,10 +38,9 @@
                                     <span></span>
                                     <span style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                     <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
-                                        We can not just send you your old password. A unique link to reset your password has been created for you. To reset your password, click
-                                        following link and follow the instructions.
+                                       {{$mailData['body']}}
                                     </p>
-                                    <a href="{{route('forgot-password.reset-password-form',['email' => $email,'token' => $token])}}"
+                                    <a href="{{route('forgot-password.reset-password-form',['email' => $mailData['email'],'token' => $mailData['token']])}}"
                                        style="background:#df6438;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:lowercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">reset your password</a>
                                 </td>
                             </tr>
