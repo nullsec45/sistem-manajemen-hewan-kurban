@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\JenisHewanQurbanController;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -22,5 +23,9 @@ Route::prefix("forgot-password")->name("forgot-password.")->controller(ForgotPas
     Route::post("reset-password-form/{email}/{token}","resetPasswordForm")->name("reset-password-form");
 });
 
+Route::get("/", [DashboardController::class,'index'])->name("/")->middleware("auth");
 
-Route::get("/", [DashboardController::class,'index'])->name("/")->middleware('auth');
+Route::prefix("parameter-aplikasi")->name("parameter-aplikasi.")->group(function(){
+    Route::get("jenis-hewan/data",[JenisHewanQurbanController::class,"data"])->name("jenis-hewan.data");
+    Route::resource("jenis-hewan",JenisHewanQurbanController::class);
+});
