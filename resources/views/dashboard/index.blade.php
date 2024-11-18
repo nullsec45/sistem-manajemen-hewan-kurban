@@ -104,3 +104,8 @@
     </section>
 </div>
 @endsection
+
+@push('addon-script')
+<script src="{{asset('storage/assets/extensions/apexcharts/apexcharts.min.js')}}"></script>
+<script src="{{asset('storage/assets/static/js/pages/dashboard.js')}}"></script>
+@endpush
