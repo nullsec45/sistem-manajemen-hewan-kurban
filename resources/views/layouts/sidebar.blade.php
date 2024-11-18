@@ -42,7 +42,7 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
                 <li
-                    class="sidebar-item active">
+                    class="sidebar-item {{(request()->is('/')) ? 'active' : '' }}">
                     <a href="{{route('/')}}" class='sidebar-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
@@ -77,11 +77,17 @@
                     </a>
                 </li>
                 <li
-                    class="sidebar-item ">
-                    <a href="{{route('/')}}" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
+                    class="sidebar-item  has-sub {{(request()->is('parameter-aplikasi*')) ? 'active' : '' }}">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-stack"></i>
                         <span>Parameter Aplikasi</span>
                     </a>
+                    
+                    <ul class="submenu">
+                        <li class="submenu-item">
+                            <a href="{{route("parameter-aplikasi.jenis-hewan.index")}}" class="submenu-link">Jenis Hewan Qurban</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
