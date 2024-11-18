@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class JenisHewanQurban extends Model
 {
     use HasFactory;
+
+    protected $table="jenis_hewan_kurban",
+              $hidden=["created_at","updated_at"],
+              $fillable=[
+                "name",
+              ];
+
+              
 }
